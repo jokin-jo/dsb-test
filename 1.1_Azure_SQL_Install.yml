@@ -1,7 +1,5 @@
 ---
 - hosts: localhost
-  become: true 
-  ignore_errors: true 
   tasks: 
       
     - azure_rm_resourcegroup: 
