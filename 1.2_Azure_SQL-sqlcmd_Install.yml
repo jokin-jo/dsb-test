@@ -1,6 +1,5 @@
 ---
 - hosts: localhost
-  become: true 
   tasks:
     - copy:
         src: sqlcmd
