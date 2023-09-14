@@ -8,7 +8,7 @@
     - name: Ensure SQL server exists
       azure_rm_sqlserver:
         resource_group: "{{resourcegroup}}"
-        server_name: "{{sqlserver}}"
+        name: "{{sqlserver}}"
         location: "{{ location }}"
         admin_username: "{{ admin }}"
         admin_password: "{{ password }}"
