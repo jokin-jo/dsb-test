@@ -7,7 +7,7 @@
         dest: /usr/local/bin/
 
     - name: Test sqlcmd
-      shell: sqlcmd --version
+      command: sqlcmd --version
       register: version
     
     - name: Print the version
