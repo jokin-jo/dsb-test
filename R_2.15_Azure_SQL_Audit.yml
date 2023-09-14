@@ -2,10 +2,12 @@
 - name: Ensure Azure SQL PaaS Auditing is Enabled
   hosts: localhost
   connection: local
+  become: true 
   gather_facts: False
   tasks:
-    - command: wget -nv -q https://raw.githubusercontent.com/ansible-collections/azure/dev/requirements-azure.txt
-    - command: pip install -r requirements-azure.txt
+   - yum:
+       name: ansible-collection-microsoft-sql
+       state: installed 
   
     - name: Ensure SQL server exists
       azure.azcollection.azure_rm_sqlserver:
