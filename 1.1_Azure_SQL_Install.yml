@@ -1,0 +1,35 @@
+---
+- hosts: localhost
+  become: true 
+  ignore_errors: true 
+  tasks: 
+      
+    - azure_rm_resourcegroup: 
+        location: "{{location}}"
+        name: "{{resourcegroup}}"
+      name: "Create Azure resource group"
+     
+    - azure_rm_sqlserver: 
+        admin_password: "{{password}}"
+        admin_username: "{{admin}}"
+        name: "{{sqlserver}}"
+        resource_group: "{{resourcegroup}}"
+        version: "12.0"
+      name: "Create Azure SQL Server Logical host"
+    
+    - azure_rm_sqldatabase: 
+        name: "{{sqldb}}"
+        resource_group: "{{resourcegroup}}"
+        server_name: "{{sqlserver}}"
+      name: "Create Azure SQL Database"
+      
+          
+  vars: 
+    admin: student
+    location: eastus
+    password: "RedHat123@!"
+    resourcegroup: manulife_test_1
+    sqldb: manulife_db  
+    sqlserver: manulifesqlserver
+    azure_ad_username: alex
+    your_subscription_id: 6d1e140e-296e-42c1-b27a-26c101cc127f

@@ -1,0 +1,46 @@
+---
+- name: Ensure Azure SQL PaaS Auditing is Enabled
+  hosts: localhost
+  connection: local
+  gather_facts: False
+  tasks:
+    - name: Ensure SQL server exists
+      azure.azcollection.azure_rm_sqlserver:
+        resource_group: "{{ resourcegroup }}"
+        name: "{{ sqlserver }}"
+        location: eastus
+        admin_username: "{{ admin }}"
+        admin_password: "{{ password }}"
+
+    - name: Ensure SQL database exists
+      azure.azcollection.azure_rm_sqldatabase:
+        resource_group: "{{ resourcegroup }}"
+        server_name: "{{ sqlserver }}"
+        name: "{{ sqldb }}"
+        location: eastus
+
+  # Ensure Azure SQL Database Auditing is enabled
+    - name: Enable Auditing on Azure SQL Database
+      azure_rm_sqldatabase:
+       resource_group: "{{ resourcegroup }}"
+       server_name: "{{ sqlserver }}"
+       name: "{{ sqldb }}"
+       auditing_policy:
+        state: 'Enabled'
+        storage_account: '/subscriptions/"{{ your_subscription_id }}"/resourceGroups/"{{ resourcegroup }}"/providers/Microsoft.Storage/storageAccounts/"{{ storage_acc }}"'
+        storage_endpoint: 'https://your_storage_account.blob.core.windows.net/'
+        storage_account_access_key: '"{{ storage_account_key }}"'
+        retention_days: 365    
+
+  vars: 
+    admin: student
+    location: eastus
+    password: "RedHat123@!"
+    resourcegroup: manulife_test_1
+    sqldb: manulife_db  
+    sqlserver: manulifesqlserver
+    azure_ad_username: alex
+    your_subscription_id: 6d1e140e-296e-42c1-b27a-26c101cc127f
+    storage_account_key: 
+    storage_acc: 
+...

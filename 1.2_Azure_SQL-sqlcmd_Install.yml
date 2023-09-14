@@ -1,0 +1,25 @@
+---
+- hosts: localhost
+  become: true 
+  tasks:
+    - copy:
+        src: sqlcmd
+        dest: /usr/local/bin/
+
+    - name: Test sqlcmd
+      shell: sqlcmd --version
+      register: version
+    
+    - name: Print the version
+      debug: 
+        var: version        
+
+    - name: "1.1 Ensure Latest SQL Server Service Packs and Hotfixes are Installed (Manual)"
+      command: |
+       sqlcmd -y 20 -Y 30 -Q "SELECT SERVERPROPERTY('Edition') AS Edition, SERVERPROPERTY('ProductVersion') AS ProductVersion, SERVERPROPERTY('ProductLevel') AS ProductLevel;"
+      register: mssql_11_a_out
+    - name: "1.1 Ensure Latest SQL Server Service Packs and Hotfixes are Installed (Manual)"
+      debug:
+        msg:
+         - 'Ensure the installed SQL Server Service Packs and Hotfixes are latest:'
+         -  "{{ mssql_11_a_out.stdout_lines [2] }}"

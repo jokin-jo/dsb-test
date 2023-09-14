@@ -1,0 +1,44 @@
+---
+
+# This playbook can be run once we have storage endpoint details
+
+- name: Setup Microsoft Defender for Azure SQL Database
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Enable Advanced Data Security on the SQL Server
+      azure.azcollection.azure_rm_sqlserver:
+        resource_group: "{{ resourcegroup }}"
+        name: "{{ sqlserver }}"
+        location: eastus
+        admin_username: "{{ admin }}"
+        admin_password: "{{ password }}"
+        version: "12.0"
+        advanced_data_security_enabled: yes
+      register: sqlserver
+
+    - name: Configure Advanced Threat Protection settings on the Azure SQL Database
+      azure.azcollection.azure_rm_sqldatabase:
+        resource_group: "{{ resourcegroup }}"
+        name: "{{ sqlserver }}"  
+        location: eastus
+        threat_detection_policy:
+          state: enabled
+          email_account_admins: enabled
+          email_addresses:
+            - admin@example.com
+          retention_days: 30
+          use_server_default: disabled
+          disabled_alerts:
+            - none
+          storage_endpoint: "{{ storge_end_pont }}"
+          storage_account_access_key: "{{ storage_key }}"
+  
+  vars: 
+    admin: admin
+    location: eastus
+    password: "RedHat123@!"
+    resourcegroup: manulife_test
+    sqldb: manulife_db  
+    sqlserver: manulife_sql_server

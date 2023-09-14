@@ -1,0 +1,63 @@
+---
+- hosts: localhost
+  become: true 
+  ignore_errors: true 
+  tasks: 
+
+  # Ensure SQL Server is present
+    - name: Ensure SQL server exists
+      azure_rm_sqlserver:
+        resource_group: "{{resourcegroup}}"
+        server_name: "{{sqlserver}}"
+        location: "{{ location }}"
+        admin_username: "{{ admin }}"
+        admin_password: "{{ password }}"
+
+
+    - name: Configure Azure SQL Server firewall
+      azure_rm_sqlfirewallrule:
+        resource_group: "{{resourcegroup}}"
+        server_name: "{{sqlserver}}"
+        name: 'Allow_Specific_Range'
+        start_ip_address: '15.0.0.1' # start of your allowed IP range
+        end_ip_address: '15.0.0.255' # end of your allowed IP range
+      register: firewall_result
+    - debug:
+        var: firewall_result
+      
+
+    - name: Deny all public access to SQL Server
+      azure_rm_sqlfirewallrule:
+        resource_group: "{{ resourcegroup }}"
+        server_name: "{{ sqlserver }}"
+        name: "DenyAllPublicAccess"
+        start_ip_address: "0.0.0.0"
+        end_ip_address: "0.0.0.0"
+        state: present
+
+    # Disable Allow Azure services option
+    - name: Disable Allow Azure services to access SQL Server
+      azure_rm_sqlserver_facts:
+        resource_group: "{{ resourcegroup }}"
+        name: "{{ sqlserver }}"
+        expand: "firewallRules"
+      register: sql_server_facts
+
+    - name: Remove default firewall rule for Azure services
+      azure_rm_sqlfirewallrule:
+        resource_group: "{{ resourcegroup }}"
+        server_name: "{{ sqlserver }}"
+        name: "{{ item.name }}"
+        state: absent
+      loop: "{{ sql_server_facts.firewall_rules }}"
+      when: item.start_ip_address == '0.0.0.0' and item.end_ip_address == '0.0.0.0' 
+          
+  vars: 
+    admin: student
+    location: eastus
+    password: "RedHat123@!"
+    resourcegroup: manulife_test_1
+    sqldb: manulife_db  
+    sqlserver: manulifesqlserver
+    azure_ad_username: alex
+    your_subscription_id: 6d1e140e-296e-42c1-b27a-26c101cc127f

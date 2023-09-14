@@ -1,0 +1,25 @@
+---
+- name: Enable Azure AD Authentication for Azure SQL Database
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Add Azure AD Admin for SQL Server
+      azure.azcollection.azure_rm_sqlserver:
+        resource_group: "{{ resourcegroup }}"
+        name: "{{ sqlserver }}"
+        location: eastus
+        admin_username: "{{ admin }}"
+        admin_password: "{{ password }}"
+        administrators:
+            login: alex
+            azure_ad_only_authentication: true 
+
+
+  vars: 
+    admin: admin
+    location: eastus
+    password: "RedHat123@!"
+    resourcegroup: manulife_test
+    sqldb: manulife_db  
+    sqlserver: manulife_sql_server      

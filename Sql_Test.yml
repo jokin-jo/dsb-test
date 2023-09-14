@@ -1,0 +1,16 @@
+---
+- name: Azure SQL Database Hardening
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+
+  - name: Get details of Azure SQL Database
+    azure_rm_sqldatabase_info:
+      resource_group: manulife_test_1
+      server_name: manulifesqlserver
+    register: sqldb_info
+
+  - name: Test the teach
+    debug:
+      var: sqldb_info
