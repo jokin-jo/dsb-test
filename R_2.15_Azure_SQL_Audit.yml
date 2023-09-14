@@ -5,9 +5,9 @@
   become: true 
   gather_facts: False
   tasks:
-   - yum:
-       name: ansible-collection-microsoft-sql
-       state: installed 
+    - yum:
+         name: ansible-collection-microsoft-sql
+         state: installed 
   
     - name: Ensure SQL server exists
       azure.azcollection.azure_rm_sqlserver:
