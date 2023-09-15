@@ -6,6 +6,12 @@
   gather_facts: False
   tasks:
 
+    - yum:
+        name: python3-pip
+        state: installed
+        
+    - command: pip install ansible[azure]    
+
     - name: Ensure SQL server exists
       azure.azcollection.azure_rm_sqlserver:
         resource_group: "{{ resourcegroup }}"
