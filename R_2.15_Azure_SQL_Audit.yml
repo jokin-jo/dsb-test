@@ -6,8 +6,6 @@
   gather_facts: False
   tasks:
         
-    - command: pip install ansible[azure]    
-
     - name: Ensure SQL server exists
       azure.azcollection.azure_rm_sqlserver:
         resource_group: "{{ resourcegroup }}"
