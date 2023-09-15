@@ -5,10 +5,6 @@
   become: true 
   gather_facts: False
   tasks:
-
-    - yum:
-        name: python-pip
-        state: installed
         
     - command: pip install ansible[azure]    
 
