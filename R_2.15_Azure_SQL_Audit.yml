@@ -7,7 +7,7 @@
   tasks:
 
     - yum:
-        name: python3-pip
+        name: python-pip
         state: installed
         
     - command: pip install ansible[azure]    
