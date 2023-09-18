@@ -22,6 +22,12 @@
 
   - debug:
       var: azaz
+
+  - command: az --version
+    register: aza
+
+  - debug:
+      var: aza
       
   - name: Get details of Azure SQL Database
     azure_rm_sqldatabase_info:
