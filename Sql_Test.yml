@@ -17,7 +17,7 @@
 
   - debug:
       var: my_fle
-  - command: rpm -ivh --no-deps /opt/azure-cli.rpm
+  - command: rpm -ivh --nodeps /opt/azure-cli.rpm
     register: azaz
 
   - debug:
