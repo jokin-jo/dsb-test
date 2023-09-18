@@ -18,7 +18,7 @@
 
   - debug:
       var: my_file
-  - yum:
+  - ansible.builtin.yum:
       name: /opt/azure-cli.rpm
       state: present  
       
