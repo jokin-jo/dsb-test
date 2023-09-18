@@ -24,7 +24,7 @@
   - debug:
       var: my_fle
   - ansible.builtin.dnf:
-      name: python3-dnf
+      name: httpd
       state: present
 
   - command: az --version
