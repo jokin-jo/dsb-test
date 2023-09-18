@@ -9,7 +9,7 @@
       curl  -O https://aka.ms/InstallAzureCliRpmEl8Edge -L
       yum localinstall -y InstallAzureCliRpmEl8Edge
       echo "az installed successfully"
-  - comamnd: az --version
+  - command: az --version
     register: my_name
 
   - debug:
