@@ -9,8 +9,12 @@
       curl  -O https://aka.ms/InstallAzureCliRpmEl8Edge -L
       yum localinstall -y InstallAzureCliRpmEl8Edge
       echo "az installed successfully"
+  - comamnd: az --version
+    register: my_name
 
-
+  - debug:
+      var: my_name
+      
   - name: Get details of Azure SQL Database
     azure_rm_sqldatabase_info:
       resource_group: manulife_test_1
