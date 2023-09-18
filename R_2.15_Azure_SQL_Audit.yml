@@ -7,7 +7,7 @@
   tasks:
         
     - name: Ensure SQL server exists
-      azure.azcollection.azure_rm_sqlserver:
+      azure_rm_sqlserver:
         resource_group: "{{ resourcegroup }}"
         name: "{{ sqlserver }}"
         location: eastus
