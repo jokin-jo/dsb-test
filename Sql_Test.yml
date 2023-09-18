@@ -24,7 +24,7 @@
   - debug:
       var: my_fle
 
-  - command: dnf update -y
+  - command: dnf update
     register: my_upd
   - debug:
       var: my_upd
