@@ -5,10 +5,8 @@
   gather_facts: no
   tasks:
 
-  - command: 
-       - wget https://aka.ms/InstallAzureCliRpmEl8Edge -O /opt/.
-       - yum localinstall -y /opt/azure-cli.el8.rpm
-       - echo "az installed successfully"
+  - command: wget https://aka.ms/InstallAzureCliRpmEl8Edge -O /opt/.
+     
 
 
   - name: Get details of Azure SQL Database
