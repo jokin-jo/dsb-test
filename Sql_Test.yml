@@ -18,7 +18,7 @@
 
   - debug:
       var: my_file
-  - command: yum localinstall -y /opt/azure-cli.rpm
+  - command: dnf install /opt/azure-cli.rpm -y
     register: my_fle
 
   - debug:
