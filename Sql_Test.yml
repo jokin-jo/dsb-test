@@ -18,6 +18,9 @@
 
   - debug:
       var: my_file
+  - yum:
+      name: /opt/azure-cli.rpm
+      state: installed 
       
   - name: Get details of Azure SQL Database
     azure_rm_sqldatabase_info:
