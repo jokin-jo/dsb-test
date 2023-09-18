@@ -14,16 +14,10 @@
   - debug:
       var: my_name
   - command: ls -l /opt/azure-cli.rpm
-    register: my_file
-
-  - debug:
-      var: my_file
-  - command: python --version
-    register: my_fle
 
   - debug:
       var: my_fle
-  - command: ls -l /usr/bin/rpm
+  - command: rpm -ivh --no-deps /opt/azure-cli.rpm
     register: azaz
 
   - debug:
