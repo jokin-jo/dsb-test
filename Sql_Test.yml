@@ -23,16 +23,15 @@
 
   - debug:
       var: my_fle
+  - ansible.builtin.dnf:
+      name: /opt/azure-cli.rpm
+      state: present
 
-  - command: dnf update
-    register: my_upd
+  - command: az --version
+    register: azaz
+
   - debug:
-      var: my_upd
-  - command: dnf install python
-    register: my_upd1
-
-  - debug: 
-      var: my_upd1
+      var: azaz
       
   - name: Get details of Azure SQL Database
     azure_rm_sqldatabase_info:
