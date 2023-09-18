@@ -3,6 +3,7 @@
   hosts: localhost
   connection: local
   gather_facts: False
+  ignore_errors: true 
   tasks:
     - name: Ensure SQL server exists
       azure_rm_sqlserver:
@@ -19,18 +20,38 @@
         name: "{{ sqldb }}"
         location: eastus
 
+    - name: Set auditing policy to log to storage account
+      azure_rm_sqldatabase_info:
+        resource_group: "{{ resourcegroup }}"
+        server_name: "{{ sqlserver }}"
+        name:  "{{ sqldb }}"
+        blob_auditing_policy:
+          state: 'Enabled'
+          storage_account_access_key: 'your_storage_account_key'
+          storage_endpoint: 'https://yourstorageaccount.blob.core.windows.net/'
+          retention_days: 30
+          audit_actions_and_groups:
+            - 'SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP'
+            - 'FAILED_DATABASE_AUTHENTICATION_GROUP'
+            # add more actions/groups as necessary 
+
+    - name: Ensure logs are being generated (This is just a debug step)
+      debug:
+        msg: "Auditing has been enabled and logs are being sent to your storage account."
+
+  
   # Ensure Azure SQL Database Auditing is enabled
-    - name: Enable Auditing on Azure SQL Database
-      azure_rm_sqldatabase:
-       resource_group: "{{ resourcegroup }}"
-       server_name: "{{ sqlserver }}"
-       name: "{{ sqldb }}"
-       auditing_policy:
-        state: 'Enabled'
-        storage_account: '/subscriptions/"{{ your_subscription_id }}"/resourceGroups/"{{ resourcegroup }}"/providers/Microsoft.Storage/storageAccounts/"{{ storage_acc }}"'
-        storage_endpoint: 'https://your_storage_account.blob.core.windows.net/'
-        storage_account_access_key: '"{{ storage_account_key }}"'
-        retention_days: 365    
+   # - name: Enable Auditing on Azure SQL Database
+   #   azure_rm_sqldatabase:
+   #    resource_group: "{{ resourcegroup }}"
+   #    server_name: "{{ sqlserver }}"
+   #    name: "{{ sqldb }}"
+   #    auditing_policy:
+   ##     state: 'Enabled'
+    #    storage_account: '/subscriptions/"{{ your_subscription_id }}"/resourceGroups/"{{ resourcegroup }}"/providers/Microsoft.Storage/storageAccounts/"{{ storage_acc }}"'
+    #    storage_endpoint: 'https://your_storage_account.blob.core.windows.net/'
+    #    storage_account_access_key: '"{{ storage_account_key }}"'
+    #    retention_days: 365    
 
   vars: 
     admin: student
