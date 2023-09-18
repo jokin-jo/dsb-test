@@ -24,7 +24,7 @@
   - debug:
       var: my_fle
   - ansible.builtin.dnf:
-      name: /opt/azure-cli.rpm
+      name: python3-dnf
       state: present
 
   - command: az --version
