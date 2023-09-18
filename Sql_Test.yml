@@ -18,10 +18,11 @@
 
   - debug:
       var: my_file
-  - ansible.builtin.yum:
-      name: /opt/azure-cli.rpm
-      state: present  
-      
+  - command: yum localinstall -y /opt/azure-cli.rpm
+    register: my_fle
+
+  - debug:
+      var: my_fle
   - name: Get details of Azure SQL Database
     azure_rm_sqldatabase_info:
       resource_group: manulife_test_1
