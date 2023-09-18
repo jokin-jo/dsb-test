@@ -23,7 +23,7 @@
 
   - debug:
       var: my_fle
-  - command: ls -l /usr/bin/dnf
+  - command: ls -l /usr/bin/yum
     register: azaz
 
   - debug:
