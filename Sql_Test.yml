@@ -1,3 +1,4 @@
+## works with execution environment with python 3.9
 ---
 - name: Azure SQL Database Hardening
   hosts: localhost
