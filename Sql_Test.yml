@@ -23,7 +23,7 @@
 
   - debug:
       var: my_fle
-  - command: ls -l /usr/bin/yum
+  - command: ls -l /usr/bin/rpm
     register: azaz
 
   - debug:
