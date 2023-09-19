@@ -29,6 +29,13 @@
 
   - debug:
       var: aza
+
+  - command: az sql mi show -n manulifesqlserver -g manulife_test_1 --query "minimalTlsVersion"
+    register: tls
+
+  - debug:
+      var: tls 
+     
       
   - name: Get details of Azure SQL Database
     azure_rm_sqldatabase_info:
