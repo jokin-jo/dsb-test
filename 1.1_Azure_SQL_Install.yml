@@ -26,8 +26,8 @@
     admin: student
     location: eastus
     password: "RedHat123@!"
-    resourcegroup: manulife_test_1
-    sqldb: manulife_db_2  
+    resourcegroup: manulife_testtwo 
+    sqldb: manulife_dbtwo
     sqlserver: manulifesqlserver_2
     azure_ad_username: alex
     your_subscription_id: 6d1e140e-296e-42c1-b27a-26c101cc127f
