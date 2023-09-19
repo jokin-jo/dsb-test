@@ -28,14 +28,13 @@
 
   - debug:
       var: aza
-   - command: az login -u alex -p RedHat123@!   
-
-  - command: az sql mi show -n manulifesqlserver -g manulife_test_1 --query "minimalTlsVersion"
-    register: tls
-
-  - debug:
-      var: tls 
-     
+  - name: Enable Azure SQL audit policy
+      command: az sql db audit-policy update --name {{ db_name }} --resource-group {{ resource_group }} --server {{ server_name }} --state Enabled --storage-account {{ storage_account }}
+      environment:
+        AZURE_SUBSCRIPTION_ID: fe93c33c-98cd-457b-8519-89aabb6a1561
+        AZURE_CLIENT_ID: 0a001409-6edb-4499-b7bf-72302effdd04
+        AZURE_SECRET: kGX8Q~XPpUkjSRNOfJI3PtZhizTuBty5K.WFmbo2
+        AZURE_TENANT: d7860064-f883-4923-bd06-78e2e94d3fe3
       
   - name: Get details of Azure SQL Database
     azure_rm_sqldatabase_info:
