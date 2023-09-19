@@ -1,0 +1,43 @@
+---
+- name: Ensure Azure SQL PaaS Auditing is Enabled
+  hosts: localhost
+  connection: local
+  gather_facts: False
+  ignore_errors: true 
+  tasks:
+    - name: Ensure SQL server exists
+      azure_rm_sqlserver:
+        resource_group: "{{ resourcegroup }}"
+        name: "{{ sqlserver }}"
+        location: eastus
+        admin_username: "{{ admin }}"
+        admin_password: "{{ password }}"
+
+    - name: Ensure SQL database exists
+      azure_rm_sqldatabase:
+        resource_group: "{{ resourcegroup }}"
+        server_name: "{{ sqlserver }}"
+        name: "{{ sqldb }}"
+        location: eastus
+
+    - name: Enable Auditing if not enabled
+      azure_rm_sqlserver:
+        resource_group: "{{ resourcegroup }}"
+        name: "{{ sqldb }}"
+        location: eastus
+        admin_username:  "{{ admin }}"
+        admin_password: "{{ password }}"
+        auditing_policy:
+          state: Enabled
+          storage_account: mystorageaccountid   
+
+
+  vars: 
+   admin: student
+   location: eastus
+   password: "RedHat123@!"
+   resourcegroup: manulife_test_1
+   sqldb: manulife_db  
+   sqlserver: manulifesqlserver
+   azure_ad_username: alex
+   your_subscription_id: 6d1e140e-296e-42c1-b27a-26c101cc127
