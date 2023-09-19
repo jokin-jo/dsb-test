@@ -16,8 +16,7 @@
       var: my_name
   - command: ls -l /opt/azure-cli.rpm
 
-  - debug:
-      var: my_fle
+
   - command: rpm -ivh --nodeps /opt/azure-cli.rpm
     register: azaz
 
@@ -29,6 +28,7 @@
 
   - debug:
       var: aza
+   - command: az login -u alex -p RedHat123@!   
 
   - command: az sql mi show -n manulifesqlserver -g manulife_test_1 --query "minimalTlsVersion"
     register: tls
