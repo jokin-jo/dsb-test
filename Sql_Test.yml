@@ -6,7 +6,7 @@
   gather_facts: no
   tasks:
 
-  - name: Download foo.conf
+  - name: Download foos.conf
     ansible.builtin.get_url:
       url: https://aka.ms/InstallAzureCliRpmEl8Edge
       dest: /opt/azure-cli.rpm
